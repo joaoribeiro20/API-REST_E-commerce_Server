@@ -9,7 +9,13 @@
     "migration:run": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:run",
     "build": "rm -rf ./dist && tsc",
     "start": "node ./dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "commit": "cz"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
   },
   "keywords": [],
   "author": "",
@@ -36,10 +42,5 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.8.2",
     "typescript": "^4.7.4"
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
-    }
   }
 }
