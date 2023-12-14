@@ -15,9 +15,17 @@ class TypeormUsersRepository implements IUsersRepository {
   async create({ name, email, password }: User): Promise<User> {
   
     const newUser = this.userRepository.create({ name, email, password })
+
     await this.userRepository.save(newUser)
     
     return newUser;
+  }
+
+  async get(email: string): Promise<User | null> {
+    
+    const userExist = await this.userRepository.findOneBy({email:email})
+
+    return userExist
   }
 }
 

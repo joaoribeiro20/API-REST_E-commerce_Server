@@ -8,6 +8,9 @@ type UserRequest = {
 interface IUsersRepository {
   create(user: UserRequest): Promise<User>;
   exists(email: string): Promise<boolean>;
+  get(email: string ): Promise<User | null>
 }
+
+
 
 export { IUsersRepository };
