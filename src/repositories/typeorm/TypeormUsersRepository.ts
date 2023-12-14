@@ -23,9 +23,15 @@ class TypeormUsersRepository implements IUsersRepository {
 
   async get(email: string): Promise<User | null> {
     
-    const userExist = await this.userRepository.findOneBy({email:email})
+    const userExist = await this.userRepository.findOne({
+      where: { email },
+      relations: {
+        roles:true,
+        permissions:true
+      },
+    });
 
-    return userExist
+    return userExist 
   }
 }
 
