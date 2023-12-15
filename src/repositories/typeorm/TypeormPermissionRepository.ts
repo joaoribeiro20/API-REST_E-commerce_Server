@@ -22,6 +22,21 @@ class TypeormPermissionsRepository implements IPermissionRepository {
         return !!permissionExist
     }
 
+    async get(names: string[]): Promise<Permission[]> {
+        console.log("dados do repositore")
+        console.log(names)
+        const permissionRole: Permission[] = [];
+    
+        for (const name of names) {
+            const permissionsExists = await this.permissionRepository.findOneBy({ name });
+    
+            if (permissionsExists) {
+                permissionRole.push(permissionsExists);
+            }
+        }
+    
+        return permissionRole;
+    }
 }
 
 export { TypeormPermissionsRepository }

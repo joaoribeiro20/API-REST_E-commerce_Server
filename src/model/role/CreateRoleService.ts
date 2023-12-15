@@ -1,5 +1,5 @@
-import { Role } from "../entities/user/Role";
-import { IRoleRepository } from "../repositories/IRoleRepositories";
+import { Role } from "../../entities/user/Role";
+import { IRoleRepository } from "../../repositories/IRoleRepositories";
 
 type RoleResquest = {
     name:string;

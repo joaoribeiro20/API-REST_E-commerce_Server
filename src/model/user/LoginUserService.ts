@@ -1,10 +1,10 @@
 import { compare } from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
-import { User } from "../entities/user/User";
-import { IUsersRepository } from "../repositories/IUsersRepositories";
-import { Role } from '../entities/user/Role';
-import { Permission } from '../entities/user/Permission';
+import { User } from "../../entities/user/User";
+import { IUsersRepository } from "../../repositories/IUsersRepositories";
+import { Role } from '../../entities/user/Role';
+import { Permission } from '../../entities/user/Permission';
 
 type UserRequest = {
     email: string;

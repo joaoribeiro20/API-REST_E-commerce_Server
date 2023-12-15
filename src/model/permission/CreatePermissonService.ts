@@ -1,5 +1,5 @@
-import { Permission } from "../entities/user/Permission";
-import { IPermissionRepository } from "../repositories/IPermissionRepositories";
+import { Permission } from "../../entities/user/Permission";
+import { IPermissionRepository } from "../../repositories/IPermissionRepositories";
 
 type PermissionResquest = {
     name:string;

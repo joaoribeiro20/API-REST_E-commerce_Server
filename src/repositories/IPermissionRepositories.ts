@@ -7,6 +7,7 @@ type PermissionRequest = {
 interface IPermissionRepository {
     create(Permission: PermissionRequest): Promise<Permission>;
     exists(name: string): Promise<boolean>;
+    get(names: string[]): Promise<Permission[]>
   }
   
   export { IPermissionRepository };

@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs";
-import { User } from "../entities/user/User";
-import { IUsersRepository } from "../repositories/IUsersRepositories";
+import { User } from "../../entities/user/User";
+import { IUsersRepository } from "../../repositories/IUsersRepositories";
 import { Console } from "console";
 
 type UserRequest = {

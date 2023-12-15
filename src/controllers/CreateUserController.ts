@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CreateUserService } from '../model/CreateUserService';
+import { CreateUserService } from '../model/user/CreateUserService';
 import { TypeormUsersRepository } from '../repositories/typeorm/TypeormUsersRepository';
 
 
