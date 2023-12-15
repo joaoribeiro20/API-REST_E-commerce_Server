@@ -4,6 +4,7 @@ import { BaseEntity, DataSource } from 'typeorm'
 import { Permission } from '../entities/user/Permission'
 import { Role } from '../entities/user/Role'
 import { User } from '../entities/user/User'
+import { Product } from '../entities/store/Product'
 
 const port = process.env.DB_PORT as number | undefined
 
@@ -15,7 +16,8 @@ export const AppDataSource = new DataSource({
 	password: process.env.DB_PASS,
 	database: process.env.DB_NAME,
 	entities: [
-		BaseEntity,Permission,Role,User
+		BaseEntity,Permission,Role,User,
+		Product
 	],
 	migrations: [`${__dirname}/**/**/migrations/*.{ts,js}`],
 })
