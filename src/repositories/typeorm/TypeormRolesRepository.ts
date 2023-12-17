@@ -26,14 +26,17 @@ class TypeormRolesRepository implements IRoleRepository {
     async createRolePermission(RolePermissionRequest: { roleId: string; permissions: Permission[]; }): Promise<Role | Error> {
         
         const role = await this.roleRepository.findOneBy({ id: RolePermissionRequest.roleId })
-        
-        if(!role){
-            return new Error('role nao eocnytrada')
+        console.log(role)
+        if(role == null){
+            return new Error('role nao encontrada')
         }
-       
+        
         role.permissions = RolePermissionRequest.permissions;
-      
-        return role
+
+        const roleAndPermission = await this.roleRepository.save(role);
+
+        console.log(roleAndPermission)
+        return roleAndPermission
     }
 }
 

@@ -17,10 +17,11 @@ export class CreateRolePermissionController {
 
     const result = createRolePermissionService.execute({roleId, permissions})
 
+    console.log(result)
     if (result instanceof Error) {
         return res.status(400).json(result.message);
       }
   
-      return res.json(result);
+      return res.status(201).json(result);
     }
 }

@@ -14,10 +14,14 @@ export class CreateRolePermissionService {
     async execute({ roleId, permissions }: RolePermissionRequest): Promise<Error | Role> {
        
         const permissionsExists = await this.permissionRepository.get(permissions);
-       console.log(permissionsExists)
+        if(!permissionsExists){
+            return new Error("error na permission")
+        }
+     
         const role = await this.roleRepository.createRolePermission({ roleId, permissions: permissionsExists });
+     
         if(!role){
-            return new Error('role nao eocnytrada')
+            return new Error("error na permission")
         }
         return role;
 

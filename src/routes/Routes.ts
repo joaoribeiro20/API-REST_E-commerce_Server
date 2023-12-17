@@ -4,7 +4,7 @@ import { CreateRoleController } from '../controllers/CreateRoleController'
 import { CreatePermissionController } from '../controllers/CreatePermissonController'
 import { LoginUserController } from '../controllers/LoginUserController'
 import { CreateProductController } from '../controllers/product/CreateProductController'
-import { authMiddleware } from '../middlewares/AuthMiddleware'
+import { authMiddleware } from '../middlewares/authMiddleware'
 import { GetProductController } from '../controllers/product/GetProductController'
 import { CreateRolePermissionController } from '../controllers/CreateRolePermissionController'
 
@@ -25,13 +25,13 @@ routes.post(
 
 routes.post(
     '/createRole',
-    authMiddleware,
+    /* authMiddleware, */
     new CreateRoleController().create
     )
 
 routes.post(
     '/createPermisson',
-    authMiddleware,
+   /*  authMiddleware, */
      new CreatePermissionController().create
      )
 

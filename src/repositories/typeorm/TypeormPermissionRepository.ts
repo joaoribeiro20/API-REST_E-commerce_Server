@@ -23,8 +23,8 @@ class TypeormPermissionsRepository implements IPermissionRepository {
     }
 
     async get(names: string[]): Promise<Permission[]> {
-        console.log("dados do repositore")
-        console.log(names)
+        
+        
         const permissionRole: Permission[] = [];
     
         for (const name of names) {
