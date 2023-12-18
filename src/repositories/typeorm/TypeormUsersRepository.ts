@@ -1,5 +1,7 @@
 
 import { AppDataSource } from "../../database/data-source";
+import { Permission } from "../../entities/user/Permission";
+import { Role } from "../../entities/user/Role";
 import { User } from "../../entities/user/User";
 import { IUsersRepository } from "../IUsersRepositories";
 
@@ -12,9 +14,9 @@ class TypeormUsersRepository implements IUsersRepository {
     return !!userExist;
   }
 
-  async create({ name, email, password }: User): Promise<User> {
+  async create({ name, email, password, roles }: User): Promise<User> {
   
-    const newUser = this.userRepository.create({ name, email, password })
+    const newUser = this.userRepository.create({ name, email, password, roles })
 
     await this.userRepository.save(newUser)
     
@@ -32,6 +34,69 @@ class TypeormUsersRepository implements IUsersRepository {
     });
 
     return userExist 
+  }
+
+  async addRolePermission(
+    id: string, 
+    RolePermissionRequest: { role: Role[]; permissions: Permission[]; }): Promise<User | Error> {
+    const userExist = await this.userRepository.findOne({
+      where: { id },
+      relations: {
+        roles:true,
+        permissions:true
+      },
+    });
+
+    if(!userExist){
+      return new Error('role nao encontrada')
+    }
+    
+    userExist.permissions = RolePermissionRequest.permissions
+    userExist.roles = RolePermissionRequest.role
+
+    const user =  await this.userRepository.save(userExist)
+
+    return user
+  }
+
+  async update(
+    idUser: string,
+    userUpdate: { email: string; password: string; name: string; roles: Role[] }
+  ): Promise<User | Error> {
+    try {
+      // Passo 1: Recuperar a entidade existente pelo ID
+      const userToUpdate = await this.userRepository.findOne({where: { id:idUser }} );
+
+      if (!userToUpdate) {
+        return new Error('Usuário não encontrado');
+      }
+
+      // Passo 2: Modificar os dados
+      userToUpdate.email = userUpdate.email;
+      userToUpdate.password = userUpdate.password;
+      userToUpdate.name = userUpdate.name;
+      userToUpdate.roles = userUpdate.roles;
+
+      // Passo 3: Salvar no Banco de Dados
+      const updatedUser = await this.userRepository.save(userToUpdate);
+
+      return updatedUser;
+    } catch (error) {
+      console.error('Erro ao atualizar usuário:', error);
+      return new Error('Erro ao atualizar usuário');
+    }
+  }
+
+
+  async delete(id: string): Promise<User | Error> {
+
+    const deleteUser = await this.userRepository.delete(id);
+
+    if(deleteUser){
+      return new Error('Não foi possivel excluir usuario!');
+    }
+
+    return deleteUser
   }
 }
 

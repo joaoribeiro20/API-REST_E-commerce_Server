@@ -3,22 +3,22 @@ import { BaseEntity } from "../BaseEntity";
 
 @Entity("products")
 export class Product extends BaseEntity {
-  @Column({unique:true})
+  @Column({ nullable: false })
   name: string;
 
   @Column()
   description: string;
 
-  @Column()
+  @Column({ nullable: false })
   stock: number;
 
-  @Column()
+  @Column({ nullable: false })
   price: number;
 
-  @Column()
+  @Column({ nullable: false })
   weight: number;
 
-  @Column()
+  @Column({ nullable: false })
   id_userSeller: string;
 
 }

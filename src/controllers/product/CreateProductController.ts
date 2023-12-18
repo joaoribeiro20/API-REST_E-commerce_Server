@@ -9,15 +9,15 @@ export class CreateProductController{
         
         const { name, description, stock, price, weight } = req.body
         const  idSeller  = req.user.id
-        console.log(req.user.id)
-        console.log( name )
+    
         const productRepository = new TypeormProductRepository();
         const createProductService = new CreateProductService(productRepository);
+        
         if(!idSeller){
             return res.status(400).json("id null");
         }
-        if(!name){
-            return res.status(400).json("name");
+        if (!name || !description || !stock || !price || !weight || !idSeller) {
+            return res.status(400).json("Todos os campos devem ser preenchidos.");
         }
         const result = await createProductService.execute({
             name:name, 

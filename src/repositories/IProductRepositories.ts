@@ -9,8 +9,8 @@ type ProductRequest = {
 };
 
 interface IProductRepository {
-  create(product: ProductRequest):  Promise<Product>;
-  get   (id_userSeller: string ):           Promise<Product[] | null>
+  create(product: ProductRequest):  Promise<Product | Error>;
+  get   (id_userSeller: string ):   Promise<Product[] | null>
   /* update(product: ProductRequest):  Promise<Product>;
   delete(email: string ):           Promise<Product | null>
   exists(email: string):            Promise<boolean>; */

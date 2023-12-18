@@ -13,13 +13,13 @@ import {
   
   @Entity("users")
   export class User extends BaseEntity {
-    @Column()
+    @Column({nullable: false })
     name: string;
 
-    @Column({unique:true})
+    @Column({unique:true, nullable: false })
     email: string;
   
-    @Column()
+    @Column({ nullable: false })
     password: string;
   
     @ManyToMany(() => Role)

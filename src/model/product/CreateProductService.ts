@@ -1,3 +1,4 @@
+import { error } from "console";
 import { Product } from "../../entities/store/Product";
 import { IProductRepository } from "../../repositories/IProductRepositories";
 

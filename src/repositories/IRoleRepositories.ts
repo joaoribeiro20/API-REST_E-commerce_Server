@@ -12,6 +12,8 @@ type RolePermissionRequest = {
 interface IRoleRepository {
     create(role: RoleRequest): Promise<Role>;
     exists(name: string): Promise<boolean>;
+
+    get(names: string[]): Promise<Role[]>
     createRolePermission(RolePermissionRequest:RolePermissionRequest): Promise<Role | Error>;
   }
   

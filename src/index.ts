@@ -10,7 +10,8 @@ AppDataSource.initialize().then(() => {
 
 	app.use(routes)
 
+	console.log("Rodando em : http://localhost:8088/")	
+	
 	app.use(errorMiddleware)
-	console.log("Rodando em : http://localhost:8088/")
 	return app.listen(process.env.PORT)
 })

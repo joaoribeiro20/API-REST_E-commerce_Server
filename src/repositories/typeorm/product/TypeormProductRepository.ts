@@ -14,13 +14,17 @@ class TypeormProductRepository implements IProductRepository {
         price: number;
         weight: number;
         id_userSeller: string;
-    }): Promise<Product> {
+    }): Promise<Product | Error> {
 
-        const newProduct = this.productRepository.create(product);
+        try {
+            const newProduct = this.productRepository.create(product);
 
-        await this.productRepository.save(newProduct);
+            await this.productRepository.save(newProduct);
 
-        return newProduct;
+            return newProduct;
+        } catch(error) {
+            return new Error('Ja existe Produto seu com esse mesmo nome');
+        }
     }
 
     async get(id_userSeller: string): Promise<Product[] | null> {

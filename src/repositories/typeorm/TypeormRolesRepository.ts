@@ -38,6 +38,20 @@ class TypeormRolesRepository implements IRoleRepository {
         console.log(roleAndPermission)
         return roleAndPermission
     }
+
+    async get(names: string[]): Promise<Role[]> {
+        
+        const arrayRole: Role[] = [];
+        
+        for(const name of names){
+            const roleExists = await this.roleRepository.findOneBy({ name });
+        
+            if(roleExists){
+                arrayRole.push(roleExists)
+            }
+        }
+        return arrayRole
+    }
 }
 
 export { TypeormRolesRepository }

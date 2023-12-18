@@ -1,12 +1,17 @@
-/* import { NextFunction, Request, Response } from "express";
-import { UserRepository } from "../repositories";
+import { NextFunction, Request, Response } from "express";
+import { AppDataSource } from "../database/data-source";
+import { User } from "../entities/user/User";
+
+
+
+const UserRepository = AppDataSource.getRepository(User);
 
 export function can(permissionsRoutes: string[]) {
   return async (request: Request, response: Response, next: NextFunction) => {
-    const { userId } = request;
+    const  id  = request.user.id;
 
-    const user = await UserRepository().findOne({
-      where: { id: userId },
+    const user = await UserRepository.findOne({
+      where: { id: id },
       relations: ["permissions"],
     });
 
@@ -28,10 +33,10 @@ export function can(permissionsRoutes: string[]) {
 
 export function is(rolesRoutes: string[]) {
   return async (request: Request, response: Response, next: NextFunction) => {
-    const { userId } = request;
+    const  id  = request.user.id;
 
-    const user = await UserRepository().findOne({
-      where: { id: userId },
+    const user = await UserRepository.findOne({
+      where: { id: id },
       relations: ["roles"],
     });
 
@@ -49,4 +54,4 @@ export function is(rolesRoutes: string[]) {
 
     return next();
   };
-} */
+}
