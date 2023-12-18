@@ -1,0 +1,7 @@
+
+
+class DeleteUser{
+
+}
+
+export { DeleteUser }

@@ -1,0 +1,7 @@
+
+
+class UpdateProductService{
+
+}
+
+export { UpdateProductService }
