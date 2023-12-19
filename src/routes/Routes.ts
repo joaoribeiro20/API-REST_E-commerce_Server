@@ -12,6 +12,10 @@ import { can, is } from '../middlewares/AuthPermissions'
 
 const routes = Router()
 
+routes.get("/", function (req, res) {
+    res.send("Olá Mundo!");
+  });
+
 /* ---------- POSTS --------------- */
 routes.post('/createUser',new CreateUserController().create)
 routes.post('/login', new LoginUserController().login) 

@@ -14,13 +14,13 @@ type UserRequest = {
 export class CreateUserService {
     constructor(private usersRepository: IUsersRepository) { }
 
-    async execute({ name, password, email, roles }: UserRequest): Promise<Error | User> {
+    async execute({ name, password, email, roles }: UserRequest): Promise< User> {
 
         const userAlreadyExists = await this.usersRepository.exists(email);
         
         if (userAlreadyExists) {
             /* throw new BadRequestError("User already exists!") */
-            return new Error("User already exists!");
+            throw new Error("User already exists!");
         }
 
         const passwordHash = await hash(password, 8);
