@@ -41,7 +41,7 @@ class LoginUserService {
             if (!verifyPass) {
                 return new Error('E-mail or password is invalid');
             }
-
+ 
             const jwtSecret = process.env.JWT_PASS;
 
             if (!jwtSecret) {

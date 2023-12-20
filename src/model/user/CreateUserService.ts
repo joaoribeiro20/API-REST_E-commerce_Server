@@ -14,7 +14,7 @@ type UserRequest = {
 export class CreateUserService {
     constructor(private usersRepository: IUsersRepository) { }
 
-    async execute({ name, password, email, roles }: UserRequest): Promise< User> {
+    async execute({ name, password, email, roles }: UserRequest): Promise<User | Error> {
 
         const userAlreadyExists = await this.usersRepository.exists(email);
         
@@ -25,6 +25,9 @@ export class CreateUserService {
 
         const passwordHash = await hash(password, 8);
 
+        if(passwordHash == password){
+            throw new Error("Senha nao crptografada!");
+        }
 
         const user = await this.usersRepository.create({
             name,

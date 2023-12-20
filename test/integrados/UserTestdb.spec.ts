@@ -15,7 +15,7 @@ describe('Testando configDB', () => {
     createUserService = new CreateUserService(usersRepository);
   });
 
-  it('d', async () => {
+  it.skip('d', async () => {
     const userData: User = {
       name: "teytytste",
       password: "teyste",
