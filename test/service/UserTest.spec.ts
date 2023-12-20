@@ -3,6 +3,7 @@ import { CreateUserService } from "../../src/model/user/CreateUserService";
 import { IUsersRepository } from "../../src/repositories/IUsersRepositories";
 import { beforeAll, describe, expect, it, jest } from "@jest/globals";
 import { v4 as uuidv4 } from 'uuid';
+import { mockAddAccountParams, mockUserModel } from "../common/TestUtilUser";
 
 type u = {
   email: string;
@@ -30,33 +31,15 @@ describe("Create user", () => {
   });
 
   it("should be able to create a new user", async () => {
-    // Mock the behavior of the repository's methods as needed
-    mockUsersRepository.exists.mockResolvedValue(false);
     mockUsersRepository.create.mockImplementation((async (user: User) => ({
       ...user,
       id: uuidv4(), // Assign a unique identifier
     })))
-    const usera: User = {
-      name: "teste",
-      password: "teste",
-      email: "teste@gmail.com",
-      roles: [],
-      permissions: [],
-      id: "",
-      created_at: new Date(),
-    };
-
-    const result = await createUserService.execute(usera);
+    const result = await createUserService.execute(mockAddAccountParams);
 
     // The result is a User
-    const user: u = result;
-    console.log(user);
-    expect(user).toHaveProperty("id");
-    expect(user.email).toBe("teste@gmail.com");
-
-    // Optionally, you can make assertions on the mock's method calls
-    /* expect(mockUsersRepository.exists).toHaveBeenCalledWith("teste@gmail.com");
-    expect(mockUsersRepository.create).toHaveBeenCalledWith(usera); */
+    expect(result).toHaveProperty("id");
+    expect(result.email).toBe("teste@gmail.com");
   });
 
   it("should not be able to create an existing user", async () => {
