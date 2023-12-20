@@ -1,70 +1,67 @@
 import { User } from "../../src/entities/user/User";
-import { CreateUserService } from "../../src/model/user/CreateUserService"
+import { CreateUserService } from "../../src/model/user/CreateUserService";
 import { IUsersRepository } from "../../src/repositories/IUsersRepositories";
-import { UsersRepositoryInMemory } from '../../src/repositories/typeorm/UsersRepositoryInMemory';
-import {beforeAll, describe, expect, it, jest,} from '@jest/globals';
-import { AppDataSource } from '../../src/database/data-source'
+import { beforeAll, describe, expect, it, jest } from "@jest/globals";
+import { v4 as uuidv4 } from 'uuid';
+import { mockAddAccountParams, mockUserModel } from "../common/TestUtilUser";
+
 type u = {
   email: string;
   password: string;
-  name:string;
+  name: string;
+  id: string;
+};
 
-  id:string, 
-  
-}
-/* 
-jest.mock('...', () => {
-    return {
-      UsersRepositoryInMemory: jest.fn().mockImplementation(() => ({
-        // Implemente métodos específicos, se necessário
-        // Por exemplo:
-        save: jest.fn(),
-        findByUsername: jest.fn(),
-      })),
-    };
-  });
- */
+// Mock the repository
+const mockUsersRepository: jest.Mocked<IUsersRepository> = {
+  create: jest.fn(),
+  exists: jest.fn(),
+  get:jest.fn(),
+  update:jest.fn(),
+  delete:jest.fn(),
+  addRolePermission:jest.fn(),
+  // Add any other methods that your repository interface has
+};
 
-  
 describe("Create user", () => {
-  let usersRepository: IUsersRepository;
   let createUserService: CreateUserService;
 
   beforeAll(() => {
-     usersRepository = new UsersRepositoryInMemory();
-     createUserService = new CreateUserService(usersRepository);
-  }); 
-  
-
-  it("should be able to create a new user", async () => {
-
-    const usera: User = {
-    name:"teste",
-    password:"teste",   
-    email:"teste@gmail.com",
-    roles:[], permissions:[], id:'', created_at: new Date
-    };
-
-    const result = await createUserService.execute(usera);
-      // The result is a User
-      const user: u = result;
-      console.log(user);
-      expect(user).toHaveProperty("id");
-      expect(user.email).toBe("teste@gmail.com");
-    
+    createUserService = new CreateUserService(mockUsersRepository);
   });
 
- it("should not be able to create an existing user", async () => {
+  it("should be able to create a new user", async () => {
+    mockUsersRepository.create.mockImplementation((async (user: User) => ({
+      ...user,
+      id: uuidv4(), // Assign a unique identifier
+    })))
+    const result = await createUserService.execute(mockAddAccountParams);
 
+    // The result is a User
+    expect(result).toHaveProperty("id");
+    expect(result.email).toBe("teste@gmail.com");
+  });
+
+  it("should not be able to create an existing user", async () => {
     const userData: User = {
-        name:"teste",
-        password:"teste",
-        email:"tesa@gmail.com",
-        roles:[], permissions:[], id:'', created_at: new Date
+      name: "teste",
+      password: "teste",
+      email: "tesaf@gmail.com",
+      roles: [],
+      permissions: [],
+      id: "",
+      created_at: new Date(),
     };
 
-    await createUserService.execute(userData);
+    // Mock the behavior of the repository's methods as needed
+    mockUsersRepository.exists.mockResolvedValue(true);
 
-    await expect(createUserService.execute(userData)).rejects.toEqual(new Error("User already exists!") );
-  }); 
+    await expect(createUserService.execute(userData)).rejects.toEqual(
+      new Error("User already exists!")
+    );
+
+    // Optionally, you can make assertions on the mock's method calls
+   /*  expect(mockUsersRepository.exists).toHaveBeenCalledWith("tesa@gmail.com");
+    expect(mockUsersRepository.create).not.toHaveBeenCalled(); */
+  });
 });
