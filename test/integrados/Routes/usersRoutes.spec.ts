@@ -64,11 +64,50 @@ describe('Testando as rotas', () => {
                 "roles": [],
                 "permissions": []
             })
-            expect(response.status).toBe(400);
-    // Verificar se o corpo da resposta contém a mensagem de erro esperada
-    expect(response.body).toBe('User already exists!'); 
-     
+            
+        expect(response.status).toBe(400);
+        expect(response.body).toBe('User already exists!');
+
     });
 
 
+});
+
+describe('Teste login',  () => {
+
+    it("fazer login geração do token",async()=>{
+        const response = await request(server)
+        .post('/login')
+        .send({
+            "email": "eeee@gmail.com",
+            "password": "d555aad345",
+        })
+
+        expect(response.body).toHaveProperty('token');
+        expect(response.body.token).not.toBeNull();
+        expect(response.body.token).not.toBeUndefined();
+        expect(response.body.token).not.toEqual('');
+    })
+
+    it("informando email incorreto",async()=>{
+        const response = await request(server)
+        .post('/login')
+        .send({
+            "email": "22@gmail.com",
+            "password": "d555aad345",
+        })
+
+        expect(response.body).toBe('Email does not exist!');
+    })
+
+    it("informando senha incorreto",async()=>{
+        const response = await request(server)
+        .post('/login')
+        .send({
+            "email": "eeee@gmail.com",
+            "password": "jr55",
+        })
+
+        expect(response.body).toBe('E-mail or password is invalid');
+    })
 });

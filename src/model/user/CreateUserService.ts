@@ -20,9 +20,9 @@ export class CreateUserService {
             const userAlreadyExists = await this.usersRepository.exists(email);
 
             if (userAlreadyExists) {
-                /* throw new BadRequestError("User already exists!") */
-                return new Error('User already exists!');
-            }
+                
+                throw new Error('User already exists!');
+            }/* throw new BadRequestError("User already exists!") */
 
             const passwordHash = await hash(password, 8);
 
