@@ -64,9 +64,9 @@ describe('Testando as rotas', () => {
                 "roles": [],
                 "permissions": []
             })
-            .expect(400);
-
-        // Check that the response body has the "id" property
+            expect(response.status).toBe(400);
+    // Verificar se o corpo da resposta contém a mensagem de erro esperada
+    expect(response.body).toBe('User already exists!'); 
      
     });
 
