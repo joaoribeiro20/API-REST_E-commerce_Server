@@ -1,0 +1,6 @@
+
+
+class UpdatePasswordUserService {
+
+} 
+export { UpdatePasswordUserService }

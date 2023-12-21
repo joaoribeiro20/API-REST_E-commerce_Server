@@ -21,7 +21,7 @@ interface IUsersRepository {
   update(idUser: string, userUpdate: UserRequest): Promise<User | Error>
   /*  ----Funções espeficicas---- */
   addRolePermission(id: string, RolePermissionRequest:RolePermissionRequest ): Promise<User | Error>
-
+  updatePassword(email:string, password:string): Promise<User | Error>
   /*  ---- funçoes genericas ---- */
   exists(email: string): Promise<boolean>;
 }

@@ -7,6 +7,7 @@ import { User } from "../../entities/user/User";
 import { IUsersRepository } from "../IUsersRepositories";
 
 class TypeormUsersRepository implements IUsersRepository {
+
  userRepository = AppDataSource.getRepository(User)
   async exists(email: string): Promise<boolean> {
 
@@ -111,6 +112,11 @@ class TypeormUsersRepository implements IUsersRepository {
     }
 
     return userExist
+  }
+
+
+  updatePassword(email: string, password: string): Promise<User | Error> {
+    throw new Error("Method not implemented.");
   }
 }
 
