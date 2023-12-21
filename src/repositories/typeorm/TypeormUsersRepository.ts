@@ -1,4 +1,5 @@
 
+import { Console, error } from "console";
 import { AppDataSource } from "../../database/data-source";
 import { Permission } from "../../entities/user/Permission";
 import { Role } from "../../entities/user/Role";
@@ -90,13 +91,26 @@ class TypeormUsersRepository implements IUsersRepository {
 
   async delete(id: string): Promise<User | Error> {
 
-    const deleteUser = await this.userRepository.delete(id);
 
-    if(deleteUser){
-      return new Error('Não foi possivel excluir usuario!');
+    const userExist = await this.userRepository.findOne({
+      where: { id },
+      relations: {
+        roles:true,
+        permissions:true
+      },
+    });
+
+    if(!userExist){
+      return new Error('role nao encontrada')
+    }
+    const user = await this.userRepository.delete(id);
+    console.log(user.affected)
+    if(user.affected != 1){
+      
+      return new Error('Error ao excluir')
     }
 
-    return deleteUser
+    return userExist
   }
 }
 

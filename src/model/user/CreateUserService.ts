@@ -4,16 +4,17 @@ import { IUsersRepository } from "../../repositories/IUsersRepositories";
 import { BadRequestError } from '../../helpers/api-erros'
 import { Role } from "../../entities/user/Role";
 import { error } from "console";
+import { IRoleRepository } from "../../repositories/IRoleRepositories";
 
 type UserRequest = {
     email: string;
     password: string;
     name: string;
-    roles: Role[]
+    roles: string[]
 };
 
 export class CreateUserService {
-    constructor(private usersRepository: IUsersRepository) { }
+    constructor(private usersRepository: IUsersRepository, private roleRepository: IRoleRepository) { }
 
     async execute({ name, password, email, roles }: UserRequest): Promise<User | Error> {
         try {
@@ -30,11 +31,19 @@ export class CreateUserService {
                 throw new Error("Senha nao crptografada!");
             }
 
+            const roleUserStart = await this.roleRepository.get(roles)
+
+            if (roleUserStart.length === 0) {
+                throw new Error('Role not exist');
+            }
+
+            console.log(roleUserStart)
+
             const user = await this.usersRepository.create({
                 name,
                 password: passwordHash,
                 email,
-                roles: roles
+                roles: roleUserStart
             })
 
             return user;

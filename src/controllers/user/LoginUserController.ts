@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
-import { TypeormRolesRepository } from '../repositories/typeorm/TypeormRolesRepository'
-import { CreateRoleService } from '../model/role/CreateRoleService';
-import { TypeormUsersRepository } from '../repositories/typeorm/TypeormUsersRepository';
-import { CreateUserService } from '../model/user/CreateUserService';
-import { LoginUserService } from '../model/user/LoginUserService';
+import { TypeormRolesRepository } from '../../repositories/typeorm/TypeormRolesRepository'
+import { CreateRoleService } from '../../model/role/CreateRoleService';
+import { TypeormUsersRepository } from '../../repositories/typeorm/TypeormUsersRepository';
+import { CreateUserService } from '../../model/user/CreateUserService';
+import { LoginUserService } from '../../model/user/LoginUserService';
 
 export class LoginUserController{
     async login(req: Request, res: Response) {

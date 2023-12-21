@@ -1,11 +1,12 @@
 import { Request, Response } from 'express'
-import { CreateUserService } from '../model/user/CreateUserService';
-import { TypeormUsersRepository } from '../repositories/typeorm/TypeormUsersRepository';
+import { CreateUserService } from '../../model/user/CreateUserService';
+import { TypeormUsersRepository } from '../../repositories/typeorm/TypeormUsersRepository';
+import { TypeormRolesRepository } from '../../repositories/typeorm/TypeormRolesRepository';
 
 
 export class CreateUserController {
   async create(req: Request, res: Response) {
-    const { name, email, password, roles} = req.body
+    const { name, email, password, roles } = req.body
     if (!name || !email || !password) {
       return res.status(401).json("Todos os campos devem ser preenchidos.");
     }
@@ -13,14 +14,15 @@ export class CreateUserController {
     if (!regexPassword.test(password)) {
       return res.status(402).json("Senha invalida, Formato nao aceito");
     }
-/*     const regexEmail = /^\S+\w+@+\w+.+\W+com|\W+br$/;
-    if (!regexEmail.test(password)) {
+    const regexEmail = /^\S+\w+@+\w+.+\W+com|\W+br$/;
+    if (!regexEmail.test(email)) {
       return res.status(403).json("Email invalido");
-    } */
+    }
 
 
     const usersRepository = new TypeormUsersRepository();
-    const createUserService = new CreateUserService(usersRepository);
+    const roleRepository = new TypeormRolesRepository();
+    const createUserService = new CreateUserService(usersRepository, roleRepository);
     const result = await createUserService.execute({ name, email, password, roles })
 
     if (result instanceof Error) {

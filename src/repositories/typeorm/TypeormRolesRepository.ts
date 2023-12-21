@@ -50,6 +50,7 @@ class TypeormRolesRepository implements IRoleRepository {
                 arrayRole.push(roleExists)
             }
         }
+
         return arrayRole
     }
 }

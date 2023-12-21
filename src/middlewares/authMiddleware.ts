@@ -37,7 +37,9 @@ console.log( authorization )
     const user = await userRepository.findOneBy({ id });
 
     if (!user) {
+    
       throw new UnauthorizedError('Não autorizado');
+     
     }
 
     const { password: _, ...loggedUser } = user;
