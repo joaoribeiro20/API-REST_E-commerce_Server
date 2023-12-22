@@ -5,6 +5,8 @@ import { Permission } from '../entities/user/Permission'
 import { Role } from '../entities/user/Role'
 import { User } from '../entities/user/User'
 import { Product } from '../entities/store/Product'
+import { ClientInfo } from '../entities/user/ClientInfo'
+import { SellerInfo } from '../entities/user/SellerInfo'
 
 const port = process.env.DB_PORT as number | undefined
 
@@ -18,7 +20,7 @@ export const AppDataSource = new DataSource({
 	/* synchronize: true,
 	logging: true, */
 	entities: [
-		BaseEntity,Permission,Role,User,
+		BaseEntity,Permission,Role,User,ClientInfo,SellerInfo,
 		Product
 	],
 
