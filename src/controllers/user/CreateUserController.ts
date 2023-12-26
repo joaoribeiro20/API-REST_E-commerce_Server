@@ -12,11 +12,11 @@ export class CreateUserController {
     }
     const regexPassword = /^\S+\w$/;
     if (!regexPassword.test(password)) {
-      return res.status(402).json("Senha invalida, Formato nao aceito");
+      return res.status(401).json("Senha invalida, Formato nao aceito");
     }
     const regexEmail = /^\S+\w+@+\w+.+\W+com|\W+br$/;
     if (!regexEmail.test(email)) {
-      return res.status(403).json("Email invalido");
+      return res.status(401).json("Email invalido");
     }
 
 

@@ -43,11 +43,10 @@ describe('Testando as rotas', () => {
         const response = await request(server)
             .post('/createUser')
             .send({
-                "name": "sellerTeste6",
-                "email": "sellerteste6@gmail.com",
-                "password": "d555aad345",
+                "name": "userTesta",
+                "email": "userTesta@gmail.com",
+                "password": "daad345",
                 "roles": ["admin"],
-
             })
             .expect(201);
 

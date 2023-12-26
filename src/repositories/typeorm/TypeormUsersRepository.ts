@@ -5,17 +5,36 @@ import { Permission } from "../../entities/user/Permission";
 import { Role } from "../../entities/user/Role";
 import { User } from "../../entities/user/User";
 import { IUsersRepository } from "../IUsersRepositories";
+import { SellerInfo } from "../../entities/user/SellerInfo";
+
+type dataUserSeller = {
+  idUserSeller:string,
+  cnpj:number,
+  telefone:number,
+  celular:number,
+  cep:number,
+  cidade:string,
+  bairro:string,
+  endereco:string,
+  numero:number,
+  razaoSocial:string
+}
+
+
 
 class TypeormUsersRepository implements IUsersRepository {
 
+
+
  userRepository = AppDataSource.getRepository(User)
+ userSellerRepository = AppDataSource.getRepository(SellerInfo)
+
   async exists(email: string): Promise<boolean> {
 
     const userExist = await this.userRepository.findOneBy({email:email})
 
     return !!userExist;
   }
-
   async create({ name, email, password, roles }: User): Promise<User> {
   
     const newUser = this.userRepository.create({ name, email, password, roles })
@@ -24,7 +43,6 @@ class TypeormUsersRepository implements IUsersRepository {
     
     return newUser;
   }
-
   async get(email: string): Promise<User | null> {
     
     const userExist = await this.userRepository.findOne({
@@ -37,7 +55,6 @@ class TypeormUsersRepository implements IUsersRepository {
 
     return userExist 
   }
-
   async addRolePermission(
     id: string, 
     RolePermissionRequest: { role: Role[]; permissions: Permission[]; }): Promise<User | Error> {
@@ -60,7 +77,6 @@ class TypeormUsersRepository implements IUsersRepository {
 
     return user
   }
-
   async update(
     idUser: string,
     userUpdate: { email: string; password: string; name: string; roles: Role[] }
@@ -88,8 +104,6 @@ class TypeormUsersRepository implements IUsersRepository {
       return new Error('Erro ao atualizar usuário');
     }
   }
-
-
   async delete(id: string): Promise<User | Error> {
 
 
@@ -113,10 +127,28 @@ class TypeormUsersRepository implements IUsersRepository {
 
     return userExist
   }
-
-
-  updatePassword(email: string, password: string): Promise<User | Error> {
+  async updatePassword(email: string, password: string): Promise<User | Error> {
     throw new Error("Method not implemented.");
+  } 
+  
+  /* -------------------------------- ------------------------------------ */
+  async addInfoSeller({ 
+     idUserSeller, cnpj, telefone,
+     celular, cep, cidade, bairro,
+     endereco, numero, razaoSocial 
+    }: dataUserSeller): Promise<Error | SellerInfo> {
+
+    if(!idUserSeller){
+      return new Error("Id user not exist");
+    }
+    
+    const infoSeller = this.userSellerRepository.create({ 
+      idUserSeller, cnpj, telefone, celular, cep, cidade, bairro, endereco, numero, razaoSocial
+    } )
+
+    await this.userSellerRepository.save(infoSeller)
+    
+    return infoSeller;
   }
 }
 

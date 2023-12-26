@@ -10,6 +10,7 @@ import { CreateRolePermissionController } from '../controllers/CreateRolePermiss
 import { AddUserAcsessControlListController } from '../controllers/AddUserAccessControlListController'
 import { can, is } from '../middlewares/AuthPermissions'
 import { DeleteUserController } from '../controllers/user/DeleteUserController'
+import { AddInforSellerController } from '../controllers/user/sellerController/addInforSellerController'
 
 const routes = Router()
 
@@ -37,6 +38,8 @@ routes.post("/roles/:roleId", is(["admin"]), can([""]), new CreateRolePermission
 /* ----------  Funções apenas para vendedor logado ------------ */
 routes.post('/createProduct', authMiddleware, is(["seller"]), new CreateProductController().create) 
 
+
+routes.post('/addDataUserSeller', authMiddleware, is(["seller"]), new AddInforSellerController().addDataSeller) 
 
 
 
