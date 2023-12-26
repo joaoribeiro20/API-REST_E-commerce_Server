@@ -6,6 +6,7 @@ import { AppDataSource } from '../../../src/database/data-source';
 
 import express, { Express } from 'express';
 import http from 'http'; // Importe o tipo http
+import { User } from '../../../src/entities/user/User';
 
 
 
@@ -38,20 +39,24 @@ describe('Testando as rotas', () => {
 
     });
 
-    it.skip('Criar um usuario', async () => {
+    it('Criar um usuario', async () => {
         const response = await request(server)
             .post('/createUser')
             .send({
-                "name": "sellerTeste3",
-                "email": "ase@gmail.com",
+                "name": "sellerTeste6",
+                "email": "sellerteste6@gmail.com",
                 "password": "d555aad345",
-                "roles": [],
-                "permissions": []
+                "roles": ["admin"],
+
             })
             .expect(201);
 
         // Check that the response body has the "id" property
         expect(response.body).toHaveProperty("id");
+
+        const userRepository = AppDataSource.getRepository(User);
+        await userRepository.delete(response.body.id);
+
     });
 
     it('tentativa de criar um usuario ja existente', async () => {
@@ -64,7 +69,7 @@ describe('Testando as rotas', () => {
                 "roles": [],
                 "permissions": []
             })
-            
+
         expect(response.status).toBe(400);
         expect(response.body).toBe('User already exists!');
 
@@ -73,15 +78,15 @@ describe('Testando as rotas', () => {
 
 });
 
-describe('Teste login',  () => {
+describe('Teste login', () => {
 
-    it("fazer login geração do token",async()=>{
+    it("fazer login geração do token", async () => {
         const response = await request(server)
-        .post('/login')
-        .send({
-            "email": "eeee@gmail.com",
-            "password": "d555aad345",
-        })
+            .post('/login')
+            .send({
+                "email": "eeee@gmail.com",
+                "password": "d555aad345",
+            })
 
         expect(response.body).toHaveProperty('token');
         expect(response.body.token).not.toBeNull();
@@ -89,25 +94,25 @@ describe('Teste login',  () => {
         expect(response.body.token).not.toEqual('');
     })
 
-    it("informando email incorreto",async()=>{
+    it("informando email incorreto", async () => {
         const response = await request(server)
-        .post('/login')
-        .send({
-            "email": "22@gmail.com",
-            "password": "d555aad345",
-        })
+            .post('/login')
+            .send({
+                "email": "22@gmail.com",
+                "password": "d555aad345",
+            })
 
         expect(response.body).toBe('Email does not exist!');
     })
 
-    it("informando senha incorreto",async()=>{
+    it("informando senha incorreto", async () => {
         const response = await request(server)
-        .post('/login')
-        .send({
-            "email": "eeee@gmail.com",
-            "password": "jr55",
-        })
+            .post('/login')
+            .send({
+                "email": "eeee@gmail.com",
+                "password": "jr55",
+            })
 
-        expect(response.body).toBe('E-mail or password is invalid');
+        expect(response.body).toBe('password is invalid');
     })
 });

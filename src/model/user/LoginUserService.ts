@@ -39,7 +39,7 @@ class LoginUserService {
             const verifyPass = await compare(password, emailExist.password);
 
             if (!verifyPass) {
-                return new Error('E-mail or password is invalid');
+                return new Error('password is invalid');
             }
  
             const jwtSecret = process.env.JWT_PASS;
@@ -49,6 +49,10 @@ class LoginUserService {
             }
 
             const token = jwt.sign({ id: emailExist.id, roles: emailExist.roles }, jwtSecret, { expiresIn: '8h' });
+
+            if(!token){
+                return new Error('token nao foi gerado');
+            }
 
             const { password: _, ...userLogin } = emailExist;
             const info = { user: userLogin, token: token };
