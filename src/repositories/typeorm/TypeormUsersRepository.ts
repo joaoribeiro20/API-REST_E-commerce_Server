@@ -5,6 +5,7 @@ import { User } from "../../entities/user/User";
 import { IUsersRepository } from "../IUsersRepositories";
 import { SellerInfo } from "../../entities/user/SellerInfo";
 import { error } from "console";
+import { ClientInfo } from "../../entities/user/ClientInfo";
 
 type dataUserSeller = {
   idUserSeller: string,
@@ -22,9 +23,10 @@ type dataUserSeller = {
 
 
 class TypeormUsersRepository implements IUsersRepository {
+  
   userRepository = AppDataSource.getRepository(User)
   userSellerRepository = AppDataSource.getRepository(SellerInfo)
-
+  userClientRepository =AppDataSource.getRepository(ClientInfo)
   async exists(email: string): Promise<boolean> {
 
     const userExist = await this.userRepository.findOneBy({ email: email })
@@ -72,33 +74,6 @@ class TypeormUsersRepository implements IUsersRepository {
     const user = await this.userRepository.save(userExist)
 
     return user
-  }
-  async update(
-    idUser: string,
-    userUpdate: { email: string; password: string; name: string; roles: Role[] }
-  ): Promise<User | Error> {
-    try {
-      // Passo 1: Recuperar a entidade existente pelo ID
-      const userToUpdate = await this.userRepository.findOne({ where: { id: idUser } });
-
-      if (!userToUpdate) {
-        return new Error('Usuário não encontrado');
-      }
-
-      // Passo 2: Modificar os dados
-      userToUpdate.email = userUpdate.email;
-      userToUpdate.password = userUpdate.password;
-      userToUpdate.name = userUpdate.name;
-      userToUpdate.roles = userUpdate.roles;
-
-      // Passo 3: Salvar no Banco de Dados
-      const updatedUser = await this.userRepository.save(userToUpdate);
-
-      return updatedUser;
-    } catch (error) {
-      console.error('Erro ao atualizar usuário:', error);
-      return new Error('Erro ao atualizar usuário');
-    }
   }
   async delete(id: string): Promise<User | Error> {
 
@@ -194,6 +169,27 @@ class TypeormUsersRepository implements IUsersRepository {
       return new Error('error ao salvar dados')
     }
 
+  }
+
+
+  /* ----------------------------------------------------------------- */
+  async addDataClient(info: { 
+    idUserClient: string; cpf: number; celular: number; 
+    cep: number; cidade: string; bairro: string; endereco: string; numero: number; }
+    ): Promise<Error | ClientInfo> {
+
+     if (!info.idUserClient) {
+      return new Error("Id user not exist");
+    }
+    try {
+      const infoClient = this.userClientRepository.create(info)
+
+      await this.userClientRepository.save(infoClient)
+
+      return infoClient;
+    } catch (error) {
+      return new Error('error ao salvar dados')
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { TypeormProductRepository } from '../../repositories/typeorm/product/TypeormProductRepository';
+import { TypeormProductRepository } from '../../repositories/typeorm/TypeormProductRepository';
 import { CreateProductService } from '../../model/product/CreateProductService';
 
 

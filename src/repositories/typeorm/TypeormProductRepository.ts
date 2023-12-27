@@ -1,6 +1,6 @@
-import { Product } from "../../../entities/store/Product";
-import { IProductRepository } from "../../IProductRepositories";
-import { AppDataSource } from "../../../database/data-source";
+import { Product } from "../../entities/store/Product";
+import { IProductRepository } from "../IProductRepositories";
+import { AppDataSource } from "../../database/data-source";
 
 
 
