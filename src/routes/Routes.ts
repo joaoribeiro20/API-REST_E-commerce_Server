@@ -10,7 +10,9 @@ import { CreateRolePermissionController } from '../controllers/CreateRolePermiss
 import { AddUserAcsessControlListController } from '../controllers/AddUserAccessControlListController'
 import { can, is } from '../middlewares/AuthPermissions'
 import { DeleteUserController } from '../controllers/user/DeleteUserController'
-import { AddInforSellerController } from '../controllers/user/sellerController/addInforSellerController'
+import { AddInforSellerController } from '../controllers/user/sellerController/AddInforSellerController'
+import { GetDataSellerController } from '../controllers/user/sellerController/GetDataSellerController'
+import { UpdateAllInfoSellerController } from '../controllers/user/sellerController/UpdateAllInfoSellerController'
 
 const routes = Router()
 
@@ -40,6 +42,8 @@ routes.post('/createProduct', authMiddleware, is(["seller"]), new CreateProductC
 
 
 routes.post('/addDataUserSeller', authMiddleware, is(["seller"]), new AddInforSellerController().addDataSeller) 
+routes.get('/getDataSeller', authMiddleware, is(["seller"]), new GetDataSellerController().getData) 
+routes.put('/updateDataSeller',  authMiddleware, is(["seller"]), new UpdateAllInfoSellerController().updateAllInfoSeller) 
 
 
 

@@ -3,24 +3,27 @@ import { IUsersRepository } from "../../../repositories/IUsersRepositories";
 
 
 type dataUserSeller = {
-    email:string, password:string,idUserSeller:String,
-    cnpj:Number,telefone:Number,celular:Number,
-    cep:Number,cidade:String,bairro:String,
-    endereco:String,numero:String,razaoSocial:string
+ 
+   idUserSeller:string,cnpj:number,telefone:number,celular:number,
+    cep:number,cidade:string,bairro:string,
+    endereco:string,numero:number,razaoSocial:string
 }
 
 class UpdateAllInfoSellerService {
     constructor(private userRepository: IUsersRepository) { }
     
     async execute({ 
-        email, password, idUserSeller,
-        cnpj, telefone, celular, cep,
+        idUserSeller,cnpj, telefone, celular, cep,
         cidade, bairro, endereco,
-        numero, razaoSocial }:dataUserSeller): Promise<User | Error> {
+        numero, razaoSocial }:dataUserSeller): Promise<dataUserSeller | Error> {
         try {
+            const result = await this.userRepository.updateInfoSeller({ idUserSeller,cnpj, telefone, celular, cep,
+                cidade, bairro, endereco,
+                numero, razaoSocial })
 
+                return result
         }catch{
-            
+            return new Error('da')
         }
     }
 

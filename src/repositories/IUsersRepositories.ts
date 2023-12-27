@@ -44,7 +44,8 @@ interface IUsersRepository {
 
    /*  ---- funçoes dados a mais tipo seller e client ---- */
   addInfoSeller(info:dataUserSeller): Promise<SellerInfo | Error>;
-  /* updateInfoSeller():Promise<SellerInfo | Error>; */
+  getDataSeller(idUserSeller:string): Promise<SellerInfo | Error>;
+  updateInfoSeller(info:dataUserSeller):Promise<SellerInfo | Error>; 
 
   /* addInfoClient(): Promise<ClientInfo | Error>; 
    updateInfoClient():Promise<ClientInfo | Error>; */

@@ -13,7 +13,7 @@ type dataUserSeller = {
     razaoSocial: string
 }
 
-class addInforSellerService {
+class AddInforSellerService {
     constructor(private usersRepository: IUsersRepository) { }
     async execute({
         idUserSeller,cnpj,telefone,
@@ -26,12 +26,13 @@ class addInforSellerService {
                 celular,cep,cidade,bairro,endereco,
                 numero,razaoSocial 
             })
+            console.log(dataInfoUser)
 
             return dataInfoUser;
-        } catch {
-            return new Error("Failed to save seller information");
+        } catch(error) {
+            return new Error("error");
         }
 
     }
 }
-export { addInforSellerService }
+export { AddInforSellerService }
