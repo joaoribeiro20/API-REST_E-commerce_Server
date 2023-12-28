@@ -5,7 +5,7 @@ import { CreatePermissionController } from '../controllers/CreatePermissonContro
 import { LoginUserController } from '../controllers/user/LoginUserController'
 import { CreateProductController } from '../controllers/product/CreateProductController'
 import { authMiddleware } from '../middlewares/AuthMiddleware'
-import { GetProductController } from '../controllers/product/GetProductController'
+import { GetAllProductOneSellerController } from '../controllers/product/GetAllProductOneSellerController'
 import { CreateRolePermissionController } from '../controllers/CreateRolePermissionController'
 import { AddUserAcsessControlListController } from '../controllers/AddUserAccessControlListController'
 import { can, is } from '../middlewares/AuthPermissions'
@@ -14,6 +14,7 @@ import { AddInforSellerController } from '../controllers/user/sellerController/A
 import { GetDataSellerController } from '../controllers/user/sellerController/GetDataSellerController'
 import { UpdateAllInfoSellerController } from '../controllers/user/sellerController/UpdateAllInfoSellerController'
 import { AddDataClientController } from '../controllers/user/clientController/AddDataClientController'
+import { GetDataClientController } from '../controllers/user/clientController/GetDataClientController'
 
 const routes = Router()
 
@@ -28,7 +29,7 @@ routes.post('/login', new LoginUserController().login)
 routes.post('/addUserRolePermission', authMiddleware, new AddUserAcsessControlListController().addUserRolePermission) 
 
 /* ---------- GET ---------------- */
-routes.get('/getAllProductOneSeller/:id_userSeller', new GetProductController().get) 
+routes.get('/getAllProductOneSeller/:id_userSeller', new GetAllProductOneSellerController().get) 
 
 /* ---------- DELETE ---------------- */
 routes.delete('/deleteUser', authMiddleware, new DeleteUserController().delete) 
@@ -48,10 +49,14 @@ routes.put('/updateDataSeller',  authMiddleware, is(["seller"]), new UpdateAllIn
 
 
 routes.post('/addDataClient', authMiddleware, is(["client"]), new AddDataClientController().addDataClient) 
-/* routes.get('/getDataSeller', authMiddleware, is(["seller"]), new GetDataSellerController().getData) 
-routes.put('/updateDataSeller',  authMiddleware, is(["seller"]), new UpdateAllInfoSellerController().updateAllInfoSeller) */ 
+routes.get('/getDataClient', authMiddleware, is(["client"]), new GetDataClientController().getData) 
+/*routes.put('/',  authMiddleware, is(["client"]), new ().) */ 
 
 
 
 
 export default routes
+
+
+
+/* http://localhost:8088/ */

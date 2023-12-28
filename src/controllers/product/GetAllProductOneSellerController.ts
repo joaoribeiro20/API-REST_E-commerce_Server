@@ -1,16 +1,17 @@
 import { Request, Response } from 'express'
 import { TypeormProductRepository } from '../../repositories/typeorm/TypeormProductRepository';
 import { CreateProductService } from '../../model/product/CreateProductService';
-import { GetProductService } from '../../model/product/GetProductService';
+import { GetAllProductOneSellerService } from '../../model/product/GetAllProductOneSellerService';
 
 
 
-export class GetProductController{
+
+export class GetAllProductOneSellerController{
     async get(req: Request, res: Response) {
         const { id_userSeller } = req.params
     
         const productRepository = new TypeormProductRepository();
-        const getProductService = new GetProductService(productRepository);
+        const getProductService = new GetAllProductOneSellerService(productRepository);
       /*   if(!idSeller){
             return res.status(400).json("id null");
         }

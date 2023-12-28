@@ -57,8 +57,8 @@ interface IUsersRepository {
   updateInfoSeller(info:dataUserSeller):Promise<SellerInfo | Error>; 
 
   addDataClient(info:dataUserClient): Promise<ClientInfo | Error>; 
-  /*getDataClient():Promise<ClientInfo | Error>;
-  updateInfoClient():Promise<ClientInfo | Error>; */
+  getDataClient(idUserClient:string):Promise<ClientInfo | Error>;
+  /*updateInfoClient():Promise<ClientInfo | Error>; */
 }
 
 

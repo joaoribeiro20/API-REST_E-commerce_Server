@@ -11,12 +11,12 @@ type ProductRequest = {
     id_userSeller:string
    };
 
-export class GetProductService{
+export class GetAllProductOneSellerService{
     constructor(private productRepository: IProductRepository) { }
 
     async execute(id_userSeller: string): Promise<Error | Product[]> {
         
-        const getProduct = await this.productRepository.get(id_userSeller)
+        const getProduct = await this.productRepository.getAllProductOneSeller(id_userSeller)
 
         if(!getProduct){
             return new Error("produtos nao encontrados")

@@ -27,7 +27,7 @@ class TypeormProductRepository implements IProductRepository {
         }
     }
 
-    async get(id_userSeller: string): Promise<Product[] | null> {
+    async getAllProductOneSeller(id_userSeller: string): Promise<Product[] | null> {
         const productExist = await this.productRepository.find({
             where: { id_userSeller: id_userSeller }
         });

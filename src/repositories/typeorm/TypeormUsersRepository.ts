@@ -191,6 +191,15 @@ class TypeormUsersRepository implements IUsersRepository {
       return new Error('error ao salvar dados')
     }
   }
+
+  async getDataClient(idUserClient: string): Promise<ClientInfo | Error> {
+    const result = await this.userClientRepository.findOneBy({ idUserClient })
+
+    if (!result) {
+      return new Error('dados nao encontrados')
+    }
+    return result
+  }
 }
 
 export { TypeormUsersRepository };
