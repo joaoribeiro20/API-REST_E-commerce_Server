@@ -5,6 +5,7 @@ import { AppDataSource } from "../../database/data-source";
 
 
 class TypeormProductRepository implements IProductRepository {
+   
     productRepository = AppDataSource.getRepository(Product)
 
     async create(product: {
@@ -34,7 +35,7 @@ class TypeormProductRepository implements IProductRepository {
 
         return productExist
     }
-}
+
 
 /* async update(product: { name: string; description: string; stock: number; price: number; weight: number; idUserSeller: string; }): Promise<Product> {
     
@@ -47,6 +48,19 @@ class TypeormProductRepository implements IProductRepository {
 /*   async exists(email: string): Promise<boolean> {
       
   } */
+ async getStoreProducts(): Promise<{ name: string; description: string; price: number; id_userSeller: string; }[] | Error> {
+    const allProducs = await this.productRepository.find({
+        select: {
+            name: true,
+            description: true,
+            price: true,
+            id_userSeller: true,
+        },
+    })
+    return allProducs
+}
+
+  }
 
 
 export { TypeormProductRepository }

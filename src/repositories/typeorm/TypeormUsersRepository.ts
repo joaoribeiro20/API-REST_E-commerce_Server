@@ -23,10 +23,10 @@ type dataUserSeller = {
 
 
 class TypeormUsersRepository implements IUsersRepository {
-  
+
   userRepository = AppDataSource.getRepository(User)
   userSellerRepository = AppDataSource.getRepository(SellerInfo)
-  userClientRepository =AppDataSource.getRepository(ClientInfo)
+  userClientRepository = AppDataSource.getRepository(ClientInfo)
   async exists(email: string): Promise<boolean> {
 
     const userExist = await this.userRepository.findOneBy({ email: email })
@@ -140,7 +140,7 @@ class TypeormUsersRepository implements IUsersRepository {
   }: dataUserSeller): Promise<Error | SellerInfo> {
 
     if (!idUserSeller) {
-      return new Error("Id user not exist");  
+      return new Error("Id user not exist");
     }
     try {
 
@@ -149,7 +149,7 @@ class TypeormUsersRepository implements IUsersRepository {
       if (!existingSeller) {
         return new Error("Seller not found");
       }
-      
+
       const infoSeller = await this.userSellerRepository.update(existingSeller, {
         cnpj, telefone, celular, cep, cidade, bairro, endereco, numero, razaoSocial
       });
@@ -173,12 +173,13 @@ class TypeormUsersRepository implements IUsersRepository {
 
 
   /* ----------------------------------------------------------------- */
-  async addDataClient(info: { 
-    idUserClient: string; cpf: number; celular: number; 
-    cep: number; cidade: string; bairro: string; endereco: string; numero: number; }
-    ): Promise<Error | ClientInfo> {
+  async addDataClient(info: {
+    idUserClient: string; cpf: number; celular: number;
+    cep: number; cidade: string; bairro: string; endereco: string; numero: number;
+  }
+  ): Promise<Error | ClientInfo> {
 
-     if (!info.idUserClient) {
+    if (!info.idUserClient) {
       return new Error("Id user not exist");
     }
     try {
@@ -200,6 +201,51 @@ class TypeormUsersRepository implements IUsersRepository {
     }
     return result
   }
-}
+  async updateInfoClient(info: { idUserClient: string; cpf: number; celular: number; cep: number; cidade: string; bairro: string; endereco: string; numero: number; }): Promise<ClientInfo | Error> {
+    if (!info.idUserClient) {
+      return new Error("Id user not exist");
+    }
+    try {
 
+      const existingClient = await this.userClientRepository.findOneBy({ idUserClient: info.idUserClient })
+
+      if (!existingClient) {
+        return new Error("Seller not found");
+      }
+
+      const dataUpdateClient = await this.userClientRepository.update(existingClient, {
+        cpf: info.celular, celular: info.celular, cep: info.cep, cidade: info.cidade, bairro: info.bairro, endereco: info.endereco, numero: info.numero
+      })
+
+
+      if (!dataUpdateClient) {
+        return new Error("Seller not found");
+      }
+
+      const result = await this.userClientRepository.findOneBy({ idUserClient: info.idUserClient })
+      if (!result) {
+        return new Error("Seller not found");
+      }
+
+      return result
+
+
+    } catch (error) {
+      return new Error('error ao salvar dados')
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 export { TypeormUsersRepository };
