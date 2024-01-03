@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToMany } from "typeorm";
 import { BaseEntity } from "../BaseEntity";
+import { Shopping } from "./Shopping";
 
 @Entity("products")
 export class Product extends BaseEntity {
@@ -20,5 +21,8 @@ export class Product extends BaseEntity {
 
   @Column({ nullable: false })
   id_userSeller: string;
+
+ /*  @ManyToMany(() => Shopping, (shopping) => shopping.products)
+  shopping */
 
 }

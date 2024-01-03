@@ -7,6 +7,7 @@ import { User } from '../entities/user/User'
 import { Product } from '../entities/store/Product'
 import { ClientInfo } from '../entities/user/ClientInfo'
 import { SellerInfo } from '../entities/user/SellerInfo'
+import { Shopping } from '../entities/store/Shopping'
 
 const port = process.env.DB_PORT as number | undefined
 
@@ -21,7 +22,7 @@ export const AppDataSource = new DataSource({
 	logging: true, */
 	entities: [
 		BaseEntity,Permission,Role,User,ClientInfo,SellerInfo,
-		Product
+		Product,Shopping, 
 	],
 
 	migrations: [`${__dirname}/**/**/migrations/*.{ts,js}`],

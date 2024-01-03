@@ -23,6 +23,7 @@ import { DeleteUserController } from '../controllers/user/DeleteUserController'
 import { UpdateAllInfoSellerController } from '../controllers/user/sellerController/UpdateAllInfoSellerController'
 import { UpdateDataClientController } from '../controllers/user/clientController/UpdateDataClientController'
 import { GetStoreProductsController } from '../controllers/product/GetStoreProductsController'
+import { PurchaseController } from '../controllers/product/PurchaseController'
 
 const routes = Router()
 
@@ -76,8 +77,18 @@ routes.post('/createRole', authMiddleware, is(["admin"]),new CreateRoleControlle
 routes.post('/createPermisson', is(["admin"]),new CreatePermissionController().create)
 routes.post("/roles/:roleId", is(["admin"]), can([""]), new CreateRolePermissionController().create)
 
+
+
+
+
+
+
+routes.post("/purchase", authMiddleware, is(["client"]), new PurchaseController().new)
+
+
+
 export default routes
 
 
 
-/* http://localhost:8088/updateDataClient */
+/* http://localhost:8088/purchase */

@@ -5,7 +5,11 @@ import { AppDataSource } from "../../database/data-source";
 
 
 class TypeormProductRepository implements IProductRepository {
-   
+    
+
+
+
+
     productRepository = AppDataSource.getRepository(Product)
 
     async create(product: {
@@ -23,10 +27,17 @@ class TypeormProductRepository implements IProductRepository {
             await this.productRepository.save(newProduct);
 
             return newProduct;
-        } catch(error) {
+        } catch (error) {
             return new Error('Ja existe Produto seu com esse mesmo nome');
         }
     }
+    update(product: { name: string; description: string; stock: number; price: number; weight: number; id_userSeller: string; }): Promise<Product | null> {
+        throw new Error("Method not implemented.");
+    }
+    delete(idProduct: string): Promise<Product | null> {
+        throw new Error("Method not implemented.");
+    }
+
 
     async getAllProductOneSeller(id_userSeller: string): Promise<Product[] | null> {
         const productExist = await this.productRepository.find({
@@ -36,31 +47,58 @@ class TypeormProductRepository implements IProductRepository {
         return productExist
     }
 
+    async getStoreProducts(): Promise<{ name: string; description: string; price: number; id_userSeller: string; }[] | Error> {
+        const allProducs = await this.productRepository.find({
+            select: {
+                name: true,
+                description: true,
+                price: true,
+                id_userSeller: true,
+            },
+        })
+        return allProducs
+    }
+    exists(email: string): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+    async purchase(shopping: { idProducts: []; idClient: string; }): 
+    Promise<Error | { idProducts: []; idClient: string; }> {
+       
+        const products = shopping.idProducts
+       
+        for(const ids in products){
+            const result = products.filter((product) =>  product == products[ids])
+            
+           
+             const allProducs = await this.productRepository.findOneBy({id:products[ids]})
+         
+             if(allProducs != null){
+                 
+                console.log(result.length)
+                if(!validadorCompra(allProducs.stock, result.length)){
+                    return new Error("problema stoque");
+                }
+             }else{
+                return new Error("dados vazio");
+             }
+                
+        }
 
-/* async update(product: { name: string; description: string; stock: number; price: number; weight: number; idUserSeller: string; }): Promise<Product> {
-    
-} */
-
-/*  async delete(email: string): Promise<Product | null> {
-     
- } */
-
-/*   async exists(email: string): Promise<boolean> {
-      
-  } */
- async getStoreProducts(): Promise<{ name: string; description: string; price: number; id_userSeller: string; }[] | Error> {
-    const allProducs = await this.productRepository.find({
-        select: {
-            name: true,
-            description: true,
-            price: true,
-            id_userSeller: true,
-        },
-    })
-    return allProducs
+        return shopping
+    }
+   
 }
 
-  }
 
+
+function validadorCompra(stock:number, quatidade:number){
+    if(stock == 0){
+        return false
+    }
+    if(quatidade > stock){
+        return false
+    }
+  return true
+}
 
 export { TypeormProductRepository }

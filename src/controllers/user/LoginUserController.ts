@@ -4,6 +4,7 @@ import { CreateRoleService } from '../../model/role/CreateRoleService';
 import { TypeormUsersRepository } from '../../repositories/typeorm/TypeormUsersRepository';
 import { CreateUserService } from '../../model/user/CreateUserService';
 import { LoginUserService } from '../../model/user/LoginUserService';
+import enviarEmail from '../../model/nodemailer/configService';
 
 export class LoginUserController{
     async login(req: Request, res: Response) {
@@ -17,7 +18,7 @@ export class LoginUserController{
         if (result instanceof Error) {
             return res.status(400).json(result.message);
           }
-      
+         
           return res.json(result);
     }
 }

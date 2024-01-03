@@ -1,5 +1,6 @@
 
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Shopping } from "../store/Shopping";
 
 @Entity("clientinfo")
 export class ClientInfo {
@@ -29,5 +30,8 @@ export class ClientInfo {
 
   @Column()
   numero:number;
+  
+  @OneToMany(() => Shopping, (shopping) => shopping.client)
+  shopping: Shopping[]
 
 }
