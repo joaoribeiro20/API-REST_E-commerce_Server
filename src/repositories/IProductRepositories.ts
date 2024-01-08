@@ -1,5 +1,6 @@
 import { Product } from "../entities/store/Product";
-type ProductRequest = {
+import { ClientInfo } from "../entities/user/ClientInfo";
+export type ProductRequest = {
   name: string,
   description: string,
   stock: number,
@@ -16,12 +17,12 @@ type ProductRequestStore = {
 
 interface IProductRepository {
   create(product: ProductRequest): Promise<Product | Error>;
-  getAllProductOneSeller(id_userSeller: string): Promise<Product[] | null>
-  update(product: ProductRequest):  Promise<Product | null>;
+  get(idProduct: string ):           Promise<Product | null>
+  update(product: ProductRequest, idProduct: string ):  Promise<ProductRequest | Error>;
   delete(idProduct: string ):           Promise<Product | null>
   exists(email: string):            Promise<boolean>; 
 
-
+getAllProductOneSeller(id_userSeller: string): Promise<Product[] | null>
   /* store */
 
   /*  
@@ -30,14 +31,11 @@ interface IProductRepository {
   */
 
   getStoreProducts(): Promise<ProductRequestStore[] | Error>
-  purchase(shopping:shopping):Promise<shopping | Error> 
+  purchase(products:ProductRequestStore[],
+    client:ClientInfo):Promise<String | Error> 
 
 }
 
-type shopping = {
-  idProducts:[],
-   idClient:string
-};
 
 
 

@@ -30,7 +30,7 @@ class LoginUserService {
 
     async execute({ email, password }: UserRequest): Promise<Error | UserData> {
         try {
-            const emailExist = await this.userRepository.get(email);
+            const emailExist = await this.userRepository.get(email, '');
 
             if (!emailExist) {
                 return new Error("Email does not exist!");

@@ -1,0 +1,36 @@
+ try {
+      console.log(shopping.products)
+      /* ------------------------ */
+      for (const productInfo of shopping.products) {
+        /*  console.log(productInfo); */
+        const product = await this.productRepository.findOneBy({ id: productInfo.idProduct });
+
+        if (product) {
+          if (!validadorCompra(product.stock, productInfo.amount)) {
+            return new Error(`Insufficient stock for product with ID: ${product.id}`);
+          }
+
+          /* console.log(product); */
+          const updatedStockValue = product.stock - productInfo.amount;
+          console.log(updatedStockValue);
+          /* ------------------------ */
+          // Update stock in the database
+
+          const updatedProduct = await this.productRepository.update(product.id, {
+            stock: updatedStockValue
+          });
+
+          if (updatedProduct.affected !== 1) {
+            // A atualização do estoque não afetou exatamente um item (pode indicar um problema)
+            return new Error(`Failed to update stock for product with ID: ${product.id}`);
+          }
+        } else {
+          return new Error(`Product not found with ID: ${productInfo.idProduct}`);
+        }
+      }
+
+      return shopping;
+    } catch (error) {
+      console.error("Error during purchase:");
+      return new Error("Error during purchase");
+    }

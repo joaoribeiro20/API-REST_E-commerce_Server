@@ -41,7 +41,7 @@ type RolePermissionRequest = {
 interface IUsersRepository {
   /* ----CRUD---- */
   create(user: UserRequest): Promise<User>;
-  get(email: string ): Promise<User | null>
+  get(email: string, id:string): Promise<User | null>
   delete(id:string): Promise<User | Error>
   
   /*  ----Funções espeficicas---- */

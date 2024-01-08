@@ -27,6 +27,7 @@ class TypeormUsersRepository implements IUsersRepository {
   userRepository = AppDataSource.getRepository(User)
   userSellerRepository = AppDataSource.getRepository(SellerInfo)
   userClientRepository = AppDataSource.getRepository(ClientInfo)
+  
   async exists(email: string): Promise<boolean> {
 
     const userExist = await this.userRepository.findOneBy({ email: email })
@@ -41,17 +42,33 @@ class TypeormUsersRepository implements IUsersRepository {
 
     return newUser;
   }
-  async get(email: string): Promise<User | null> {
+  async get(email: string, id:string): Promise<User | null> {
 
-    const userExist = await this.userRepository.findOne({
+    if(email != ''){
+      const userExist = await this.userRepository.findOne({
       where: { email },
       relations: {
         roles: true,
         permissions: true
       },
-    });
+    }); 
+     return userExist
+    }else if(id != ''){
+      const userExist = await this.userRepository.findOne({
+        where: { id },
+        relations: {
+          roles: true,
+          permissions: true
+        },
+      }); 
+       return userExist
+    }else{
+      return null
+    }
+    
+    
 
-    return userExist
+  
   }
   async addRolePermission(
     id: string,

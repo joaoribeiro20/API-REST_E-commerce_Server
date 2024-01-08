@@ -3,13 +3,13 @@ import { can, is } from '../middlewares/AuthPermissions'
 import { authMiddleware } from '../middlewares/AuthMiddleware'
 
 import { CreateUserController } from '../controllers/user/CreateUserController'
-import { CreateRoleController } from '../controllers/CreateRoleController'
-import { CreatePermissionController } from '../controllers/CreatePermissonController'
+import { CreateRoleController } from '../controllers/adminFunctions/CreateRoleController'
+import { CreatePermissionController } from '../controllers/adminFunctions/CreatePermissonController'
 import { CreateProductController } from '../controllers/product/CreateProductController'
-import { CreateRolePermissionController } from '../controllers/CreateRolePermissionController'
+import { CreateRolePermissionController } from '../controllers/adminFunctions/CreateRolePermissionController'
 
 import { AddInforSellerController } from '../controllers/user/sellerController/AddInforSellerController'
-import { AddUserAcsessControlListController } from '../controllers/AddUserAccessControlListController'
+import { AddUserAcsessControlListController } from '../controllers/adminFunctions/AddUserAccessControlListController'
 import { AddDataClientController } from '../controllers/user/clientController/AddDataClientController'
 
 import { LoginUserController } from '../controllers/user/LoginUserController'

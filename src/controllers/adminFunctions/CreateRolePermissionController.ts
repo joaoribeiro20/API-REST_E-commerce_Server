@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { TypeormRolesRepository } from '../repositories/typeorm/TypeormRolesRepository';
+import { TypeormRolesRepository } from '../../repositories/typeorm/TypeormRolesRepository';
 
-import { CreateRolePermissionService } from '../model/role/CreateRolePermissionService';
-import { TypeormPermissionsRepository } from '../repositories/typeorm/TypeormPermissionRepository';
+import { CreateRolePermissionService } from '../../model/role/CreateRolePermissionService';
+import { TypeormPermissionsRepository } from '../../repositories/typeorm/TypeormPermissionRepository';
 
 
 export class CreateRolePermissionController {

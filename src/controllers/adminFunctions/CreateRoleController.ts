@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { TypeormRolesRepository } from '../repositories/typeorm/TypeormRolesRepository'
-import { CreateRoleService } from '../model/role/CreateRoleService';
+import { TypeormRolesRepository } from '../../repositories/typeorm/TypeormRolesRepository'
+import { CreateRoleService } from '../../model/role/CreateRoleService';
 
 export class CreateRoleController{
     async create(req: Request, res: Response) {

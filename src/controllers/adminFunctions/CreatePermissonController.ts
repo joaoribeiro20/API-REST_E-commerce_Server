@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { TypeormPermissionsRepository } from '../repositories/typeorm/TypeormPermissionRepository';
-import { CreatePermissionService } from '../model/permission/CreatePermissonService';
+import { TypeormPermissionsRepository } from '../../repositories/typeorm/TypeormPermissionRepository';
+import { CreatePermissionService } from '../../model/permission/CreatePermissonService';
 
 
 export class CreatePermissionController{

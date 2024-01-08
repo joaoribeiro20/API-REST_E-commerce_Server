@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
-import { TypeormRolesRepository } from '../repositories/typeorm/TypeormRolesRepository';
+import { TypeormRolesRepository } from '../../repositories/typeorm/TypeormRolesRepository';
 
-import { CreateRolePermissionService } from '../model/role/CreateRolePermissionService';
-import { TypeormPermissionsRepository } from '../repositories/typeorm/TypeormPermissionRepository';
-import { AddUserAcsessControlListService } from '../model/user/AddUserAccessControlListService';
-import { TypeormUsersRepository } from '../repositories/typeorm/TypeormUsersRepository';
+import { CreateRolePermissionService } from '../../model/role/CreateRolePermissionService';
+import { TypeormPermissionsRepository } from '../../repositories/typeorm/TypeormPermissionRepository';
+import { AddUserAcsessControlListService } from '../../model/user/AddUserAccessControlListService';
+import { TypeormUsersRepository } from '../../repositories/typeorm/TypeormUsersRepository';
 
 
 export class AddUserAcsessControlListController {
