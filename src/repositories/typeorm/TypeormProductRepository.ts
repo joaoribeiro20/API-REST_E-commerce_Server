@@ -49,8 +49,15 @@ class TypeormProductRepository implements IProductRepository {
     } */
     return valueUpdateProduct
   }
-  async delete(idProduct: string): Promise<Product | null> {
-    throw new Error("Method not implemented.");
+  async delete(idProduct: string): Promise<Boolean | null> {
+    
+    const deleteProduct = await this.productRepository.delete(idProduct)
+
+    if(deleteProduct == null){
+      return null
+    }
+
+    return true
   }
   async get(idProduct: string): Promise<Product | null> {
     const product = await this.productRepository.findOneBy({ id: idProduct });
@@ -60,6 +67,9 @@ class TypeormProductRepository implements IProductRepository {
     }
     return product
   }
+
+
+  /* ------------------------------------------------------------------------------------------------- */
   async getAllProductOneSeller(id_userSeller: string): Promise<Product[] | null> {
     const productExist = await this.productRepository.find({
       where: { id_userSeller: id_userSeller }
@@ -81,7 +91,7 @@ class TypeormProductRepository implements IProductRepository {
   async exists(email: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
-
+/* --------------------------------------------------------------------------------------- */
   async  purchase(products: { name: string; description: string; price: number; id_userSeller: string; }[], client: ClientInfo): Promise<String | Error>{
 
 

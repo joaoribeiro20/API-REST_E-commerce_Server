@@ -3,7 +3,7 @@ import { CreateUserService } from '../../model/user/CreateUserService';
 import { TypeormUsersRepository } from '../../repositories/typeorm/TypeormUsersRepository';
 import { TypeormRolesRepository } from '../../repositories/typeorm/TypeormRolesRepository';
 
-import { newUserSeller } from '../../modules/nodemailer/template/shoppingSeller';
+import { newUserSeller } from '../../modules/nodemailer/template/newUserSeller';
 import enviarEmail from '../../modules/nodemailer/configService';
 
 
