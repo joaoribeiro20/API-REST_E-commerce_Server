@@ -9,6 +9,7 @@ class TypeormProductRepository implements IProductRepository {
   productRepository = AppDataSource.getRepository(Product)
   shoppingRepository = AppDataSource.getRepository(Shopping)
   userClientRepository = AppDataSource.getRepository(ClientInfo)
+
   async create(product: {
     name: string;
     description: string;
@@ -28,36 +29,37 @@ class TypeormProductRepository implements IProductRepository {
       return new Error('Ja existe Produto seu com esse mesmo nome');
     }
   }
-  async update(product:
-    {
-      name: string; description: string; stock: number;
-      price: number; weight: number; id_userSeller: string;
-    }, idProduct: string): Promise<ProductRequest | Error> {
-
-    const valueUpdateProduct = {
-      name: product.name, description: product.description, stock: product.stock,
-      price: product.price, weight: product.weight, id_userSeller: product.id_userSeller
+  async update(product: ProductRequest): Promise<ProductRequest | Error> {
+    if (product.id == undefined) {
+      return new Error('id do produto incorreto ou nao informado')
     }
 
-    const updatedProduct = await this.productRepository.update(idProduct, valueUpdateProduct);
+    const updatedProduct = await this.productRepository.update(product.id, product);
 
     if (updatedProduct.affected !== 1) {
-      // A atualização do estoque não afetou exatamente um item (pode indicar um problema)
-      return new Error(`Failed to update stock for product with ID: ${idProduct}`);
-    } /* else {
-      return new Error(`Product not found with ID: ${idProduct}`);
-    } */
-    return valueUpdateProduct
-  }
-  async delete(idProduct: string): Promise<Boolean | null> {
-    
-    const deleteProduct = await this.productRepository.delete(idProduct)
 
-    if(deleteProduct == null){
-      return null
+      return new Error(`Failed to update stock for product with ID: ${product}`);
+    }
+    return product
+  }
+  async delete(idProduct: string, idUser: string): Promise<Product | Error> {
+    const product = await this.productRepository.findOneBy({ id: idProduct });
+
+    if (idUser == product?.id_userSeller) {
+      const deleteProduct = await this.productRepository.delete(idProduct)
+      console.log("🚀 ~ TypeormProductRepository ~ delete ~ deleteProduct:", deleteProduct)
+
+      if (deleteProduct == null) {
+        return new Error('eRROR NO DELETE ')
+      }
+      if (product == null) {
+        return new Error('Error ao buscar produto')
+      }
+      return product
+    } else {
+      return new Error('Error ao buscar produto')
     }
 
-    return true
   }
   async get(idProduct: string): Promise<Product | null> {
     const product = await this.productRepository.findOneBy({ id: idProduct });
@@ -67,8 +69,6 @@ class TypeormProductRepository implements IProductRepository {
     }
     return product
   }
-
-
   /* ------------------------------------------------------------------------------------------------- */
   async getAllProductOneSeller(id_userSeller: string): Promise<Product[] | null> {
     const productExist = await this.productRepository.find({
@@ -77,37 +77,39 @@ class TypeormProductRepository implements IProductRepository {
 
     return productExist
   }
-  async getStoreProducts(): Promise<{ name: string; description: string; price: number; id_userSeller: string; }[] | Error> {
+  async getStoreProducts(): Promise<Product[] | Error> {
     const allProducs = await this.productRepository.find({
       select: {
+        id: true,
         name: true,
         description: true,
         price: true,
         id_userSeller: true,
       },
     })
+    console.log("🚀 ~ TypeormProductRepository ~ getStoreProducts ~ allProducs:", allProducs)
     return allProducs
   }
   async exists(email: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
-/* --------------------------------------------------------------------------------------- */
-  async  purchase(products: { name: string; description: string; price: number; id_userSeller: string; }[], client: ClientInfo): Promise<String | Error>{
+  /* --------------------------------------------------------------------------------------- */
+  async purchase(products: { name: string; description: string; price: number; id_userSeller: string; }[], client: ClientInfo): Promise<String | Error> {
 
 
-      try {
-        const createNewPurchase = this.shoppingRepository.create({
-          client,
-          products
-        });
-  
-  
-        await this.shoppingRepository.save(createNewPurchase);
-  
-        return "Sucesso";
-      } catch (error) {
-        return new Error('Ja existe Produto seu com esse mesmo nome');
-      }
+    try {
+      const createNewPurchase = this.shoppingRepository.create({
+        client,
+        products
+      });
+
+
+      await this.shoppingRepository.save(createNewPurchase);
+
+      return "Sucesso";
+    } catch (error) {
+      return new Error('Ja existe Produto seu com esse mesmo nome');
+    }
   }
 
 }

@@ -39,7 +39,7 @@ export class CreateUserController {
     email,
     'Cadastro realizado',
     newUserSeller(name),
-    '"Bem-vindo!!! - Loja Cofe" <devribeirotestes@hotmail.com>');
+    '"Bem-vindo!!! - Loja Cofe" <sandbox.smtp.mailtrap.io>');
 
     }
     if(result.roles[0].name == "client"){
@@ -52,7 +52,7 @@ export class CreateUserController {
     email,
     'Cadastro realizado',
     corpoEmail,
-    '"Bem-vindo!!! - Loja Cofe" <devribeirotestes@hotmail.com>');
+    '"Bem-vindo!!! - Loja Cofe" <sandbox.smtp.mailtrap.io>');
 
     }
 

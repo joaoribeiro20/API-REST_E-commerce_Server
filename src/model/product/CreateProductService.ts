@@ -1,16 +1,6 @@
 import { error } from "console";
 import { Product } from "../../entities/store/Product";
-import { IProductRepository } from "../../repositories/IProductRepositories";
-
-
-type ProductRequest = {
-    name:string,
-    description:string,
-    stock:number,
-    price:number,
-    weight:number,
-    id_userSeller:string
-   };
+import { IProductRepository, ProductRequest } from "../../repositories/IProductRepositories";
 
 export class CreateProductService{
     constructor(private productRepository: IProductRepository) { }

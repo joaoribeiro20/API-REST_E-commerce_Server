@@ -6,6 +6,7 @@ import { errorMiddleware } from './middlewares/ErrorMiddlewares'
 import swaggerDocs from "./swagger.json"
 import swaggerUi from "swagger-ui-express"
 
+
 export default AppDataSource.initialize().then(() => {
 
  	/* const swaggerUi = require('swagger-ui-express'); 
@@ -16,6 +17,7 @@ export default AppDataSource.initialize().then(() => {
     app.use(express.json())
 
 	app.use(routes)
+
 
 	console.log("Rodando em : http://localhost:8088/")
 

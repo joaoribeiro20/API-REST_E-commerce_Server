@@ -1,1 +1,174 @@
-{}
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API E-commerc Coffe-J",
+        "description": "........",
+        "termsOfService": "termos de servicos",
+        "contact": {
+            "email": "joao"
+        },
+        "license": " ...... ",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8088/v1",
+            "description": "API de teste"
+        },
+        {
+            "url": "http://localhost:8088/v2",
+            "description": "API de Produção"
+        }
+    ],
+    "paths": {
+        "/v1/createProduct": {
+            "post": {
+                "summary": "EXIBIR UM LISTA DE TODOS PRODUTOS DENTRO DO SISTEMA",
+                "description": "........",
+                "tags": [
+                    "produtos"
+                ],
+                "security":[{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Produto"
+                            },
+                            "examples": {
+                                "produto": {
+                                    "value": {
+                                        "name": "cafe sul",
+                                        "description": "cafe sul",
+                                        "stock": "cafe sul",
+                                        "price": "cafe sul",
+                                        "weight": "cafe sul",
+                                        "id_userSeller": "cafe sul"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "400": {
+                        "description": "produto ja existe"
+                    },
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Produto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/storeProducts": {
+            "get": {
+                "summary": "EXIBIR UM LISTA DE TODOS PRODUTOS DENTRO DO SISTEMA",
+                "description": "........",
+                "tags": [
+                    "produtos"
+                ],
+                "security":[{"bearerAuth": []}],
+               
+                "responses": {
+                    "401": {
+                        "description": "error interno service"
+                    },
+    
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Produto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/testeNovaRota": {}
+    },
+    "components": {
+        "schemas": {
+            "Produto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "stock": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "weight": {
+                        "type": "number"
+                    },
+                    "id_userSeller": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "securitySchemes":{
+        "bearerAuth":{
+            "type":"http",
+            "scheme":"bearer",
+            "bearerFormat":"JWT"
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

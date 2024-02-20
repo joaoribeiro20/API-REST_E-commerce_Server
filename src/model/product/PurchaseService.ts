@@ -1,3 +1,4 @@
+import { StringDecoder } from "string_decoder";
 import { Product } from "../../entities/store/Product";
 import enviarEmail from "../../modules/nodemailer/configService";
 import { endOfStock } from "../../modules/nodemailer/template/endOfStock";
@@ -17,6 +18,7 @@ export class PurchaseService {
             const getProduct = await this.productRepository.get(productInfo.idProduct);
 
             if (getProduct) {
+            console.log("🚀 ~ PurchaseService ~ execute ~ getProduct:", getProduct)
 
                 //informa o vendedor que seu estoque esta com pouca quantidade ou zerado
                 if (!validadorCompra(getProduct.stock, productInfo.amount)) {
@@ -61,7 +63,7 @@ export class PurchaseService {
 
         }
         //busca os dados do cliente para informa que a compra foi realizada com sucesso
-        
+        123287
         const dataClienr = await this.usersRepository.getDataClient(shopping.idClient)
         if (dataClienr instanceof Error) {
             return new Error(`Product not found with ID:a`);
@@ -121,16 +123,6 @@ export class PurchaseService {
         return newShopping
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

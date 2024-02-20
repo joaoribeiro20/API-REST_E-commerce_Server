@@ -8,12 +8,12 @@ const enviarEmail = async (para:string, assunto:string, mensagem:string, titulo:
       }
   
       const transporter = nodemailer.createTransport({
-        host: "smtp-mail.outlook.com", // Hotmail SMTP server
+        host: "sandbox.smtp.mailtrap.io", // Hotmail SMTP server
         port: 587,
         secure: false,
         auth: {
-          user: "devribeirotestes@hotmail.com",
-          pass: "Jr55230326",
+          user: "92a8da592b5c38",
+          pass: "fe9c3dfe9ede6f",
         },
       });
   

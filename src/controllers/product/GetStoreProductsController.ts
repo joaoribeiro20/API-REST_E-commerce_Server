@@ -5,8 +5,12 @@ import { Request, Response } from 'express'
 
 export class GetStoreProductsController{
     async get(req: Request, res: Response) {
+
+
         const productRepository = new TypeormProductRepository();
         const getStoreProducts = new GetStoreProductsService(productRepository);
+
+        
         const result = await getStoreProducts.execute()
         
         if (result instanceof Error) {
